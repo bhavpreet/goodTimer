@@ -1,1 +1,1 @@
-# timy2
+GoodTimer
