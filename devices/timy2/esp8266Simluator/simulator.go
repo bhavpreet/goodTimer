@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	timy2 "github.com/bhavpreet/timy2/constants"
+	"github.com/bhavpreet/goodTimer/devices/timy2"
 )
 
 type ImpulseCounter int

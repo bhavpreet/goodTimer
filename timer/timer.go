@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	timy2 "github.com/bhavpreet/timy2/constants"
+	"github.com/bhavpreet/goodTimer/devices/timy2"
 	"github.com/tarm/serial"
 )
 

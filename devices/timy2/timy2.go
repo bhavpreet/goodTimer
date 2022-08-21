@@ -1,4 +1,4 @@
-package constants
+package timy2
 
 const (
 	RunningTimeFormat      = "15:04:05.0"
