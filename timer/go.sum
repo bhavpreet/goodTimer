@@ -1,5 +1,7 @@
-github.com/bhavpreet/goodTimer v0.0.0-20220821103840-d78908aad403 h1:YJes18KwSDLMlxXRTEKuE4cNCCSI2z007OwA5BCVFBg=
-github.com/bhavpreet/goodTimer v0.0.0-20220821103840-d78908aad403/go.mod h1:5Vgzz81NIzNkba9MNGecOZyE/D7zhlE2jbknbHCgM1U=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220822051712-b6c3f6e5d187 h1:ugRe01ttBvey7kQf0x/jH4Wl/vM8NNNSs8GkJe2VNpI=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220822051712-b6c3f6e5d187/go.mod h1:D9z+ew2qRIGbOvlE4dLkx6FvY+x11wBObRPYIpZrnbo=
+github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3 h1:zN2lZNZRflqFyxVaTIU61KNKQ9C0055u9CAfpmqUvo4=
+github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3/go.mod h1:nPpo7qLxd6XL3hWJG/O60sR8ZKfMCiIoNap5GvD12KU=
 github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07 h1:UyzmZLoiDWMRywV4DUYb9Fbt8uiOSooupjTq10vpvnU=
 github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07/go.mod h1:kDXzergiv9cbyO7IOYJZWg1U88JhDg3PB6klq9Hg2pA=
 golang.org/x/sys v0.0.0-20220818161305-2296e01440c6 h1:Sx/u41w+OwrInGdEckYmEuU5gHoGSL4QbDz3S9s6j4U=

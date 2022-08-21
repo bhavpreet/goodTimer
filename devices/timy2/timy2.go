@@ -11,7 +11,7 @@ const (
 
 const (
 	// All Impulses
-	START_IMPULSE int = 0
+	START_IMPULSE = iota
 	END_IMPULSE
 	OTHER_IMPULSE
 )
@@ -45,7 +45,7 @@ var TimeFormatsForChannels map[string]string = map[string]string{
 }
 
 // Type of Channel
-var channelType = map[string]int{
+var ChannelType = map[string]int{
 	"C0":  START_IMPULSE,
 	"C0M": START_IMPULSE,
 	"C1":  END_IMPULSE,

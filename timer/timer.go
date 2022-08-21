@@ -11,12 +11,15 @@ import (
 	"time"
 
 	"github.com/bhavpreet/goodTimer/devices/timy2"
+	"github.com/golang-collections/collections/stack"
 	"github.com/tarm/serial"
 )
 
 // adjust port and speed for your setup
 const SERIAL_PORT_NAME = "/dev/cu.usbserial-0001"
 const SERIAL_PORT_BAUD = 38400
+
+var startStack = stack.New()
 
 // dropCR drops a terminal \r from the data.
 func dropCR(data []byte) []byte {
@@ -121,8 +124,15 @@ func (ii *impulseInput) parse() error {
 	return nil
 }
 
-func _parseImpulse(ii *impulseInput) {
+type Timespan time.Duration
+const durationFormat = "15:05:05.000"
 
+func (t Timespan) Format(format string) string {
+	z := time.Unix(0, 0).UTC()
+	return z.Add(time.Duration(t)).Format(format)
+}
+
+func _parseImpulse(ii *impulseInput) {
 	// Standard Time Format
 	if ii.isValidImpulse() {
 		err := ii.parse()
@@ -133,6 +143,26 @@ func _parseImpulse(ii *impulseInput) {
 		}
 		println("Parsing Impulse:",
 			ii.Channel, ii.Timestamp.String(), "["+ii.String()+"]")
+
+		// check channel type / start or end
+		if channelType, ok := timy2.ChannelType[ii.Channel]; ok {
+			switch channelType {
+			case timy2.START_IMPULSE:
+				startStack.Push(ii)
+			case timy2.END_IMPULSE:
+				if start := startStack.Peek(); start == nil {
+					println("False Start", ii.Channel)
+				} else {
+					_start, _ := startStack.Pop().(*impulseInput)
+					var t Timespan
+					t = Timespan(ii.Timestamp.Sub(_start.Timestamp))
+					println("FINISH:", t.Format(durationFormat))
+				}
+			}
+
+		} else {
+			println("Unknown channel type " + ii.Channel)
+		}
 	}
 }
 

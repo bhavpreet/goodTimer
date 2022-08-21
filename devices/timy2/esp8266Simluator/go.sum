@@ -1,2 +1,2 @@
-github.com/bhavpreet/goodTimer v0.0.0-20220821103840-d78908aad403 h1:YJes18KwSDLMlxXRTEKuE4cNCCSI2z007OwA5BCVFBg=
-github.com/bhavpreet/goodTimer v0.0.0-20220821103840-d78908aad403/go.mod h1:5Vgzz81NIzNkba9MNGecOZyE/D7zhlE2jbknbHCgM1U=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220822051712-b6c3f6e5d187 h1:ugRe01ttBvey7kQf0x/jH4Wl/vM8NNNSs8GkJe2VNpI=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220822051712-b6c3f6e5d187/go.mod h1:D9z+ew2qRIGbOvlE4dLkx6FvY+x11wBObRPYIpZrnbo=
