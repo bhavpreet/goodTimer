@@ -1,9 +1,12 @@
 package constants
 
 const (
-	RunningTimeFormat = "15:04:05.0"
-	ImpulseTimeFormat = "15:04:05.0000"
-	BaudRate          = 38400
+	RunningTimeFormat      = "15:04:05.0"
+	ImpulseTimeFormat      = "15:04:05.0000"
+	BaudRate               = 38400
+	ImpulseLength          = len("B####bCxxbHH:MM:SS:zhtq")
+	ImpulseTimeStampLength = len("HH:MM:SS:zhtq")
+	B                      = " "
 )
 
 const (
@@ -30,7 +33,7 @@ const (
 var TimeFormatsForChannels map[string]string = map[string]string{
 	"C0":  "15:04:05.0000",
 	"C0M": "15:04:05.00",
-	"C1":  "15:04:05.000",
+	"C1":  "15:04:05.0000",
 	"C1M": "15:04:05.00",
 	"C2":  "15:04:05.0000",
 	"C3":  "15:04:05.0000",
@@ -39,4 +42,19 @@ var TimeFormatsForChannels map[string]string = map[string]string{
 	"C6":  "15:04:05.00",
 	"C7":  "15:04:05.00",
 	"C8":  "15:04:05.00",
+}
+
+// Type of Channel
+var channelType = map[string]int{
+	"C0":  START_IMPULSE,
+	"C0M": START_IMPULSE,
+	"C1":  END_IMPULSE,
+	"C1M": END_IMPULSE,
+	"C2":  OTHER_IMPULSE,
+	"C3":  OTHER_IMPULSE,
+	"C4":  OTHER_IMPULSE,
+	"C5":  OTHER_IMPULSE,
+	"C6":  OTHER_IMPULSE,
+	"C7":  OTHER_IMPULSE,
+	"C8":  OTHER_IMPULSE,
 }

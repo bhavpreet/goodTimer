@@ -10,7 +10,6 @@ import (
 	timy2 "github.com/bhavpreet/timy2/constants"
 )
 
-
 type ImpulseCounter int
 
 var impulseCounter ImpulseCounter = 30 // start from some arbitary number
@@ -48,7 +47,7 @@ func padAfter(s string, size int, padWith string) string {
 	ret := s
 	l := len(s)
 	if l < size {
-		ret = ret + strings.Repeat(padWith, size - l)
+		ret = ret + strings.Repeat(padWith, size-l)
 	}
 	return ret
 }
@@ -104,7 +103,8 @@ func waitForImpuse() {
 		impulse = B +
 			impulseCounter.String() + B +
 			padAfter(timyChannel, 3, " ") + B +
-			now.Format(timeFormatForChannel) +
+			padAfter(now.Format(timeFormatForChannel),
+				timy2.ImpulseTimeStampLength, " ") +
 			CR
 
 		impulseCounter++
