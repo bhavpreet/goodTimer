@@ -38,7 +38,7 @@ type timy2Sim struct {
 
 // GenerateImpulses generates impulses
 func (tsim *timy2Sim) GenerateImpulses(done chan bool, interval time.Duration) chan string {
-	impulses := make(chan string)
+	impulses := make(chan string, 1024)
 	if interval == 0 {
 		interval = 5 * time.Second
 	}

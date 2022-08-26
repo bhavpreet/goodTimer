@@ -8,4 +8,4 @@ require (
 	github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07
 )
 
-require golang.org/x/sys v0.0.0-20220818161305-2296e01440c6 // indirect
+require golang.org/x/sys v0.0.0-20220823224334-20c2bfdbfe24 // indirect
