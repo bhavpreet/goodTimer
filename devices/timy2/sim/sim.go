@@ -14,7 +14,6 @@ type Timy2Sim interface {
 	RunningTimer(done chan bool) chan string
 }
 
-
 // NewTimy2Sim returns fresh instance of timy2 simulator
 func NewTimy2Sim() Timy2Sim {
 	rand.Seed(time.Now().UnixMilli())
@@ -58,7 +57,6 @@ func (tsim *timy2Sim) GenerateImpulses(done chan bool, interval time.Duration) c
 	return impulses
 }
 
-
 func (tsim *timy2Sim) RunningTimer(done chan bool) chan string {
 	runningTimer := make(chan string)
 	go func(done chan bool) {
@@ -70,7 +68,8 @@ func (tsim *timy2Sim) RunningTimer(done chan bool) chan string {
 					return
 				}
 			case <-t.C:
-				runningTimer <- time.Now().Format(timy2.RunningTimeFormat) + "\r"
+				// runningTimer <- time.Now().Format(timy2.RunningTimeFormat) + "\r"
+				runningTimer <- time.Now().Format(timy2.RunningTimeFormat)
 			}
 		}
 	}(done)
@@ -119,6 +118,7 @@ func (tsim *timy2Sim) getImpulse() string {
 	CR := "\r"
 	LF := "\n"
 	_ = LF
+	_ = CR
 	var impulse string
 	now := time.Now()
 	timyChannel := tsim.getChannel()
@@ -128,8 +128,8 @@ func (tsim *timy2Sim) getImpulse() string {
 		tsim.impulseCounter.String() + B +
 		padAfter(timyChannel, 3, " ") + B +
 		padAfter(now.Format(timeFormatForChannel),
-			timy2.ImpulseTimeStampLength, " ") +
-		CR
+			timy2.ImpulseTimeStampLength, " ") // +
+		// CR
 
 	tsim.impulseCounter++
 	_ = impulse
