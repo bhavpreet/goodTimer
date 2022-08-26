@@ -19,33 +19,6 @@ const SERIAL_PORT_BAUD = 38400
 
 var startStack = stack.New()
 
-// // dropCR drops a terminal \r from the data.
-// func dropCR(data []byte) []byte {
-// 	if len(data) > 0 && data[len(data)-1] == '\r' {
-// 		return data[0 : len(data)-1]
-// 	}
-// 	return data
-// }
-
-// func split(
-// 	data []byte,
-// 	atEOF bool) (advance int, token []byte, err error) {
-
-// 	if atEOF && len(data) == 0 {
-// 		return 0, nil, nil
-// 	}
-// 	if i := bytes.IndexByte(data, '\r'); i >= 0 {
-// 		// We have a full newline-terminated line.
-// 		return i + 1, dropCR(data[0:i]), nil
-// 	}
-// 	// If we're at EOF, we have a final, non-terminated line. Return it.
-// 	if atEOF {
-// 		return len(data), dropCR(data), nil
-// 	}
-// 	// Request more data.
-// 	return 0, nil, nil
-// }
-
 // Channel on which impulses are send to the parser
 var impulseChan = make(chan string, 128)
 
@@ -140,8 +113,7 @@ func _parseImpulse(ii *impulseInput) {
 				"format:", timy2.TimeFormatsForChannels[ii.Channel],
 				"err:", err.Error())
 		}
-		println("Parsing Impulse:",
-			ii.Channel, ii.Timestamp.String(), "["+ii.String()+"]")
+		println("Got Impulse:", "["+ii.String()+"]")
 
 		// check channel type / start or end
 		if channelType, ok := timy2.ChannelType[ii.Channel]; ok {
@@ -155,8 +127,6 @@ func _parseImpulse(ii *impulseInput) {
 					_start, _ := startStack.Pop().(*impulseInput)
 					var t Timespan
 					t = Timespan(ii.Timestamp.Sub(_start.Timestamp))
-					println("FINISH:",
-						ii.Timestamp.String(), _start.Timestamp.String(), t)
 					println("FINISH:", t.Format(durationFormat))
 				}
 			}
@@ -168,32 +138,13 @@ func _parseImpulse(ii *impulseInput) {
 }
 
 func scanForImpulse() error {
-	// go parseImpulse()
-	// conf := &serial.Config{Name: SERIAL_PORT_NAME, Baud: SERIAL_PORT_BAUD}
-	// ser, err := serial.OpenPort(conf)
-	// if err != nil {
-	// 	log.Printf(
-	// 		"Unable to serial.OpenPort on %v, err: %v",
-	// 		SERIAL_PORT_NAME, err)
-	// 	return err
-	// }
-	// scanner := bufio.NewScanner(ser)
-	// scanner.Split(split)
-	// for scanner.Scan() {
-	// 	impulseChan <- scanner.Text()
-	// }
-	// if scanner.Err() != nil {
-	// 	log.Printf(
-	// 		"Error occured while scanning, err: %v",
-	// 		scanner.Err())
-	// 	return err
-	// }
-	// return nil
-
-	timy2 := serial.NewTimy2Reader()
-	timy2.Initialize(SERIAL_PORT_NAME, SERIAL_PORT_BAUD)
-
 	var err error
+	// timy2 := serial.NewTimy2Reader()
+	timy2 := serial.NewTimy2SimReader()
+	if err = timy2.Initialize(SERIAL_PORT_NAME, SERIAL_PORT_BAUD); err != nil {
+		return err
+	}
+
 	var done chan bool = make(chan bool)
 	defer func() {
 		done <- true

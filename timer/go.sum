@@ -1,7 +1,11 @@
 github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220826051240-7d2a8ec54a92 h1:wAJjQ5DwOyfy4r5Gw13KJn+1PUPTQRDnpt2XgKM/q+c=
 github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220826051240-7d2a8ec54a92/go.mod h1:D9z+ew2qRIGbOvlE4dLkx6FvY+x11wBObRPYIpZrnbo=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220826053734-fa7aef914e98 h1:pnFEAPm8lE9/f37Iia/RFmf1N1hQptaAW0VRL8xdCGU=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220826053734-fa7aef914e98/go.mod h1:D9z+ew2qRIGbOvlE4dLkx6FvY+x11wBObRPYIpZrnbo=
 github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220826051240-7d2a8ec54a92 h1:dz3lxJGfOGxkTpI/tNkVtkhHWIf0De2/FTqAKrdHUPw=
 github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220826051240-7d2a8ec54a92/go.mod h1:TEilwRMj/JJj2ZfM31SS/NJUl4ifB4Y59MnrhDghi2k=
+github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220826053734-fa7aef914e98 h1:TCGp8nVqpsEFAymxk84V8AfkuPNhNSnZuKW3WPJN+7c=
+github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220826053734-fa7aef914e98/go.mod h1:TEilwRMj/JJj2ZfM31SS/NJUl4ifB4Y59MnrhDghi2k=
 github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3 h1:zN2lZNZRflqFyxVaTIU61KNKQ9C0055u9CAfpmqUvo4=
 github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3/go.mod h1:nPpo7qLxd6XL3hWJG/O60sR8ZKfMCiIoNap5GvD12KU=
 github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07 h1:UyzmZLoiDWMRywV4DUYb9Fbt8uiOSooupjTq10vpvnU=
