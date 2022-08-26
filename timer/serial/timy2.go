@@ -10,7 +10,7 @@ import (
 )
 
 func NewTimy2Reader() SerialReader {
-	return new(defaultTimySimReader)
+	return new(timyReader)
 }
 
 type timyReader struct {
