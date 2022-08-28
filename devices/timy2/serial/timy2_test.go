@@ -33,8 +33,11 @@ func Test_timyReader_SubscribeToImpulses(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tr := &timyReader{}
-			if err := tr.Initialize(SERIAL_PORT_NAME, SERIAL_PORT_BAUD); err != nil {
+			tr := &timyReader{sf: &SerialConfig{
+				SerialPort: SERIAL_PORT_NAME,
+				BaudRate:   SERIAL_PORT_BAUD,
+			}}
+			if err := tr.InitializeSerial(tr.sf); err != nil {
 				t.Errorf("timyReader.Initialize() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
@@ -48,7 +51,7 @@ func Test_timyReader_SubscribeToImpulses(t *testing.T) {
 			count := 0
 			for {
 				select {
-				case s := <- stream:
+				case s := <-stream:
 					println(s)
 					count++
 				}

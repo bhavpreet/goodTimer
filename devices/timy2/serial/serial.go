@@ -3,12 +3,22 @@ package serial
 import (
 	"time"
 
+	"github.com/bhavpreet/goodTimer/devices/driver"
 	"github.com/bhavpreet/goodTimer/devices/timy2/sim"
 )
 
+type SerialConfig struct {
+	SerialPort string
+	BaudRate int
+}
+
 type SerialReader interface {
-	Initialize(serialPort string, baudRate int) error
-	SubscribeToImpulses(done chan bool) (chan string, error)
+	driver.Reader
+	InitializeSerial(sconfig *SerialConfig) error
+}
+
+func NewTimy2SimDeviceReader() driver.Reader {
+	return new(defaultTimySimReader)
 }
 
 func NewTimy2SimReader() SerialReader {
@@ -19,7 +29,12 @@ type defaultTimySimReader struct{
 	tsim sim.Timy2Sim
 }
 
-func (d *defaultTimySimReader) Initialize(serialPort string, baudRate int) error {
+func (d *defaultTimySimReader) Initialize(interface{}) error {
+	d.tsim = sim.NewTimy2Sim()
+	return nil
+}
+
+func (d *defaultTimySimReader) InitializeSerial(sconfig *SerialConfig) error {
 	 d.tsim = sim.NewTimy2Sim()
 	return nil
 }

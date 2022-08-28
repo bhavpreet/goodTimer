@@ -1,0 +1,10 @@
+github.com/bhavpreet/goodTimer/devices/driver v0.0.0-20220828063715-2adc4fdb0267 h1:HgvnZPmvG+8rA3EpbSQIA8JVIAIvXPn5jkKedWOsL4c=
+github.com/bhavpreet/goodTimer/devices/driver v0.0.0-20220828063715-2adc4fdb0267/go.mod h1:GWoxw+tw39i0FJoaH0XtPUOSkNN1HWWED+QC00mhSEE=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220826043331-18cab6077dc0 h1:i5UQKisGelVrusUbMctJ6aTsyW+P73d3WEVCRCKl/Io=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220826043331-18cab6077dc0/go.mod h1:D9z+ew2qRIGbOvlE4dLkx6FvY+x11wBObRPYIpZrnbo=
+github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220828063715-2adc4fdb0267 h1:b1rBst/RiwNWEvRp85r1C7k8PSF4T86fPJiHWHy1Nq8=
+github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220828063715-2adc4fdb0267/go.mod h1:TEilwRMj/JJj2ZfM31SS/NJUl4ifB4Y59MnrhDghi2k=
+github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07 h1:UyzmZLoiDWMRywV4DUYb9Fbt8uiOSooupjTq10vpvnU=
+github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07/go.mod h1:kDXzergiv9cbyO7IOYJZWg1U88JhDg3PB6klq9Hg2pA=
+golang.org/x/sys v0.0.0-20220825204002-c680a09ffe64 h1:UiNENfZ8gDvpiWw7IpOMQ27spWmThO1RwwdQVbJahJM=
+golang.org/x/sys v0.0.0-20220825204002-c680a09ffe64/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=

@@ -1,0 +1,14 @@
+github.com/bhavpreet/goodTimer/devices/driver v0.0.0-20220828070621-105777a48dde h1:8Tm7PpUcAVCeOFpoY1VMUZV3bDOlDPFCJqCGA+fM4js=
+github.com/bhavpreet/goodTimer/devices/driver v0.0.0-20220828070621-105777a48dde/go.mod h1:GWoxw+tw39i0FJoaH0XtPUOSkNN1HWWED+QC00mhSEE=
+github.com/bhavpreet/goodTimer/devices/driver v0.0.0-20220828090348-78fc8d39e493 h1:j60YdF53tq0hkjzlBOrXBiQt7H+UfIvtypvJW0+Rvso=
+github.com/bhavpreet/goodTimer/devices/driver v0.0.0-20220828090348-78fc8d39e493/go.mod h1:GWoxw+tw39i0FJoaH0XtPUOSkNN1HWWED+QC00mhSEE=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220828084841-90380b048853 h1:G3lBi1233GzPb26IWnUNTecbHmIsabskttHEfuJ0Deo=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220828084841-90380b048853/go.mod h1:D9z+ew2qRIGbOvlE4dLkx6FvY+x11wBObRPYIpZrnbo=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220828090348-78fc8d39e493 h1:uDIonOgzYYfvFDAwphTlXc1Ub4MaR52k9lxMgCettMY=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220828090348-78fc8d39e493/go.mod h1:D9z+ew2qRIGbOvlE4dLkx6FvY+x11wBObRPYIpZrnbo=
+github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220828070621-105777a48dde h1:lqHHjpiJaSey247wOJDVJIpudNCSs+cZp9VN9dLrCeE=
+github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220828070621-105777a48dde/go.mod h1:TEilwRMj/JJj2ZfM31SS/NJUl4ifB4Y59MnrhDghi2k=
+github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220828090348-78fc8d39e493 h1:qn/bQRTdwUpVf0jF0QgamXTzDJP1uO6kzKZXYWi4Uz8=
+github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220828090348-78fc8d39e493/go.mod h1:TEilwRMj/JJj2ZfM31SS/NJUl4ifB4Y59MnrhDghi2k=
+github.com/google/gousb v1.1.2 h1:1BwarNB3inFTFhPgUEfah4hwOPuDz/49I0uX8XNginU=
+github.com/google/gousb v1.1.2/go.mod h1:GGWUkK0gAXDzxhwrzetW592aOmkkqSGcj5KLEgmCVUg=

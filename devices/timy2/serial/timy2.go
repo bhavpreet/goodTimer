@@ -3,6 +3,7 @@ package serial
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 
 	"log"
 
@@ -14,24 +15,42 @@ func NewTimy2Reader() SerialReader {
 }
 
 type timyReader struct {
-	scanner    *bufio.Scanner
-	serialPort string
-	baudRate   int
+	scanner *bufio.Scanner
+	sf      *SerialConfig
 }
 
-func (tr *timyReader) Initialize(serialPort string, baudRate int) error {
-	conf := &tsr.Config{Name: serialPort, Baud: baudRate}
+
+func (tr *timyReader) Initialize(cfg interface{}) error {
+	sf, ok := cfg.(*SerialConfig)
+	if !ok {
+		return fmt.Errorf("Invalid cfg type, should be type *SerialConfig")
+	}
+	conf := &tsr.Config{Name: sf.SerialPort, Baud: sf.BaudRate}
 	ser, err := tsr.OpenPort(conf)
 	if err != nil {
 		log.Printf(
 			"Unable to serial.OpenPort on %v, err: %v",
-			serialPort, err)
+			sf.SerialPort, err)
 		return err
 	}
 	tr.scanner = bufio.NewScanner(ser)
 	tr.scanner.Split(split)
-	tr.serialPort = serialPort
-	tr.baudRate = baudRate
+	tr.sf = sf
+	return nil
+}
+
+func (tr *timyReader) InitializeSerial(sf *SerialConfig) error {
+	conf := &tsr.Config{Name: sf.SerialPort, Baud: sf.BaudRate}
+	ser, err := tsr.OpenPort(conf)
+	if err != nil {
+		log.Printf(
+			"Unable to serial.OpenPort on %v, err: %v",
+			sf.SerialPort, err)
+		return err
+	}
+	tr.scanner = bufio.NewScanner(ser)
+	tr.scanner.Split(split)
+	tr.sf = sf
 	return nil
 }
 
@@ -55,7 +74,7 @@ func (tr *timyReader) SubscribeToImpulses(done chan bool) (chan string, error) {
 						tr.scanner.Err())
 					// return err
 					// We better reinitialize continue!
-					tr.Initialize(tr.serialPort, tr.baudRate)
+					tr.Initialize(tr.sf)
 					continue
 				}
 			}
