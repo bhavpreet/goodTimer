@@ -140,6 +140,12 @@ func (d *timy2USBReader) Initialize(cfg interface{}) error {
 func (d *timy2USBReader) SubscribeToImpulses(done chan bool) (chan string, error) {
 	out := make(chan string, 128)
 	go func(end chan bool, out chan string) {
+		defer func() {
+			if err := recover(); err != nil {
+				log.Println("panic occurred:", err)
+				return
+			}
+		}()
 		// Initialize a new Context.
 		ctx := gousb.NewContext()
 		defer ctx.Close()

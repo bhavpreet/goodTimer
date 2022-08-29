@@ -25,8 +25,8 @@ func Test_timy2USBReader_SubscribeToImpulses(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
-			// fields:  fields{cfg: GetESP32USBConfig()},
-			fields:  fields{cfg: GetTimy2USBConfig()},
+			fields:  fields{cfg: GetESP32USBConfig()},
+			// fields:  fields{cfg: GetTimy2USBConfig()},
 			args:    args{done: done},
 			wantErr: false,
 		},

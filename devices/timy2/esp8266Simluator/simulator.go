@@ -24,17 +24,17 @@ func (ic ImpulseCounter) String() string {
 
 func runningTimer() {
 	// Toggle LED
-	ledToggle := true
-	led := machine.LED
-	led.Configure(machine.PinConfig{Mode: machine.PinOutput})
+	// ledToggle := true
+	// led := machine.LED
+	// led.Configure(machine.PinConfig{Mode: machine.PinOutput})
 
 	for {
-		if ledToggle {
-			led.Low()
-		} else {
-			led.High()
-		}
-		ledToggle = !ledToggle
+		// if ledToggle {
+		// 	led.Low()
+		// } else {
+		// 	led.High()
+		// }
+		// ledToggle = !ledToggle
 
 		time.Sleep(time.Second / 10)
 		print(time.Now().Format(timy2.RunningTimeFormat) + "\r")
@@ -88,6 +88,8 @@ func waitForImpuse() {
 	// h....................... 1/100 seconds
 	// t........................ 1/1.000 seconds
 	// q....................... 1/10.000 seconds
+	// B
+	// 00
 	// (CR) ................. Carriage Return
 
 	B := " "
@@ -105,6 +107,7 @@ func waitForImpuse() {
 			padAfter(timyChannel, 3, " ") + B +
 			padAfter(now.Format(timeFormatForChannel),
 				timy2.ImpulseTimeStampLength, " ") +
+			timy2.B + "00" +
 			CR
 
 		impulseCounter++

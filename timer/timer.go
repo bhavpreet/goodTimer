@@ -22,8 +22,8 @@ func scanForImpulse() error {
 	// 	return err
 	// }
 
-	// cfg := usb.GetESP32USBConfig()
-	cfg := usb.GetTimy2USBConfig()
+	cfg := usb.GetESP32USBConfig()
+	// cfg := usb.GetTimy2USBConfig()
 
 	timy2 := usb.NewTimy2Reader()
 	if err := timy2.Initialize(cfg) ; err != nil {
