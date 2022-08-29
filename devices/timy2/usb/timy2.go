@@ -153,7 +153,8 @@ func (d *timy2USBReader) SubscribeToImpulses(done chan bool) (chan string, error
 		defer dev.Close()
 
 		// 38400 = 0x9600 ~> 0x00 0x96 in little endian
-		encoding := []byte{0x00, 0x96, 0x00, 0x00, 0x00, 0x00, 0x08}
+		// 9600  = 0x2580 ~> 0x80 0x25
+		encoding := []byte{0x80, 0x25, 0x00, 0x00, 0x00, 0x00, 0x08}
 		dev.Control(0x21, 0x20, 0, 0, encoding)
 
 		// Claim the default interface using a convenience function.

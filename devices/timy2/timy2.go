@@ -4,7 +4,7 @@ const (
 	RunningTimeFormat      = "15:04:05.0"
 	ImpulseTimeFormat      = "15:04:05.0000"
 	BaudRate               = 38400
-	ImpulseLength          = len("B####bCxxbHH:MM:SS:zhtq")
+	ImpulseLength          = len("B####bCxxbHH:MM:SS:zhtqB00")
 	ImpulseTimeStampLength = len("HH:MM:SS:zhtq")
 	B                      = " "
 )
