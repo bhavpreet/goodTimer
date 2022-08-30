@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"log"
+	"runtime/debug"
 
 	"github.com/bhavpreet/goodTimer/devices/driver"
 	"github.com/google/gousb"
@@ -137,12 +138,15 @@ func (d *timy2USBReader) Initialize(cfg interface{}) error {
 	return nil
 }
 
+// Returns EOF in `chan string` in case of error
 func (d *timy2USBReader) SubscribeToImpulses(done chan bool) (chan string, error) {
 	out := make(chan string, 128)
 	go func(end chan bool, out chan string) {
 		defer func() {
 			if err := recover(); err != nil {
 				log.Println("panic occurred:", err)
+				log.Printf("Stack Trace :\n%s", string(debug.Stack()))
+				out <- "EOF"
 				return
 			}
 		}()
@@ -154,7 +158,8 @@ func (d *timy2USBReader) SubscribeToImpulses(done chan bool) (chan string, error
 		// dev, err := ctx.OpenDeviceWithVIDPID(TIMY_VEND, TIMY_PROD)
 		dev, err := ctx.OpenDeviceWithVIDPID(d.cfg.VendorID, d.cfg.ProductID)
 		if err != nil {
-			log.Fatalf("Could not open a device: %v", err)
+			log.Printf("Could not open a device: %v", err)
+			return
 		}
 		defer dev.Close()
 

@@ -25,7 +25,7 @@ func NewImpulse(s string) *Impulse {
 
 var startStack = stack.New()
 
-func (ii *Impulse) isValidImpulse() bool {
+func (ii *Impulse) IsValidImpulse() bool {
 	if len(ii.s) == timy2.ImpulseLength && ii.s[:1] == timy2.B {
 		return true
 	}
@@ -55,7 +55,7 @@ func (ii *Impulse) parse() error {
 	// (CR) ................. Carriage Return
 
 	var err error
-	if !ii.isValidImpulse() {
+	if !ii.IsValidImpulse() {
 		return errors.New("Not a valid impulse: " + ii.String())
 	}
 
@@ -91,14 +91,14 @@ func (t Timespan) Format(format string) string {
 
 func _parseImpulse(ii *Impulse) {
 	// Standard Time Format
-	if ii.isValidImpulse() {
+	if ii.IsValidImpulse() {
 		err := ii.parse()
 		if err != nil {
 			println("Error Occured", ii.String(),
 				"format:", timy2.TimeFormatsForChannels[ii.Channel],
 				"err:", err.Error())
 		}
-		println("Got Impulse:", "["+ii.String()+"]")
+		// println("Got Impulse:", "["+ii.String()+"]")
 
 		// check channel type / start or end
 		if channelType, ok := timy2.ChannelType[ii.Channel]; ok {
@@ -115,16 +115,38 @@ func _parseImpulse(ii *Impulse) {
 					println("FINISH:", t.Format(durationFormat))
 				}
 			}
-
 		} else {
 			println("Unknown channel type " + ii.Channel)
 		}
 	}
 }
 
-func ParseImpulse(impulse string) Impulse {
-	for {
-		_parseImpulse(NewImpulse(impulse) )
+// return nil in `chan *Impulse in case of error`
+func ParseImpulse(impulseChan chan string) (chan *Impulse, func(), error) {
+	var done chan bool = make(chan bool)
+	close := func() {
+		done <- true
 	}
-}
 
+	var ic chan *Impulse = make(chan *Impulse, 128)
+
+	go func() {
+		for {
+			select {
+			case <-done:
+				return
+			default:
+				i := <-impulseChan
+				if i == "EOF" {
+					ic <- nil
+					return
+				}
+				ii := NewImpulse(i)
+				_parseImpulse(ii)
+				ic <- ii
+			}
+		}
+	}()
+
+	return ic, close, nil
+}

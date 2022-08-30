@@ -3,11 +3,12 @@ package main
 // USB Serial program to output data from a Micro-controller
 
 import (
+	"fmt"
 	"log"
 	"time"
 
 	"github.com/bhavpreet/goodTimer/devices/timy2/usb"
-	parser "github.com/bhavpreet/goodTimer/praser"
+	"github.com/bhavpreet/goodTimer/parser"
 )
 
 // Channel on which impulses are send to the parser
@@ -22,14 +23,13 @@ func scanForImpulse() error {
 	// 	return err
 	// }
 
-	cfg := usb.GetESP32USBConfig()
-	// cfg := usb.GetTimy2USBConfig()
+	// cfg := usb.GetESP32USBConfig()
+	cfg := usb.GetTimy2USBConfig()
 
 	timy2 := usb.NewTimy2Reader()
-	if err := timy2.Initialize(cfg) ; err != nil {
+	if err := timy2.Initialize(cfg); err != nil {
 		return err
 	}
-
 
 	var done chan bool = make(chan bool)
 	defer func() {
@@ -40,10 +40,24 @@ func scanForImpulse() error {
 	if err != nil {
 		return err
 	}
-	parser.ParseImpulse(impulseChan)
+
+	ic, close, err := parser.ParseImpulse(impulseChan)
+	if err != nil {
+		return err
+	}
+	defer close()
+	for {
+		ii := <-ic
+		if ii == nil {
+			log.Println("Error occured got nil")
+			return fmt.Errorf("Error occured got nil")
+		}
+		if ii.IsValidImpulse() {
+			fmt.Println("XX", ii)
+		}
+	}
 	return nil
 }
-
 
 func main() {
 	for {
