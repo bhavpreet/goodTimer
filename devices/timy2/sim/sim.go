@@ -112,7 +112,9 @@ func (tsim *timy2Sim) getImpulse() string {
 	// h....................... 1/100 seconds
 	// t........................ 1/1.000 seconds
 	// q....................... 1/10.000 seconds
-	// (CR) ................. Carriage Return
+	// B
+	// 00
+	// (cr) ................. Carriage Return
 
 	B := " "
 	CR := "\r"
@@ -128,7 +130,7 @@ func (tsim *timy2Sim) getImpulse() string {
 		tsim.impulseCounter.String() + B +
 		padAfter(timyChannel, 3, " ") + B +
 		padAfter(now.Format(timeFormatForChannel),
-			timy2.ImpulseTimeStampLength, " ") // +
+			timy2.ImpulseTimeStampLength, " ") + B + "00" // +
 		// CR
 
 	tsim.impulseCounter++

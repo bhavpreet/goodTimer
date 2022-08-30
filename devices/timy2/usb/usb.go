@@ -28,6 +28,10 @@ func (d *defaultTimy2USBSimReader) Initialize(interface{}) error {
 	return nil
 }
 
-func (d *defaultTimy2USBSimReader) SubscribeToImpulses(done chan bool) (chan string, error) {
-	return d.tsim.GenerateImpulses(done, time.Second), nil
+func (d *defaultTimy2USBSimReader) SubscribeToImpulses() (chan string, func(), error) {
+	var done chan bool = make(chan bool)
+	close := func() {
+		done <- true
+	}
+	return d.tsim.GenerateImpulses(done, time.Second), close, nil
 }

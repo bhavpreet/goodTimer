@@ -11,6 +11,8 @@ import (
 	"github.com/google/gousb"
 )
 
+const EOF string = "EOF"
+
 func NewTimy2DefaultReader() driver.Reader {
 	return new(defaultTimy2USBSimReader)
 }
@@ -139,14 +141,20 @@ func (d *timy2USBReader) Initialize(cfg interface{}) error {
 }
 
 // Returns EOF in `chan string` in case of error
-func (d *timy2USBReader) SubscribeToImpulses(done chan bool) (chan string, error) {
+func (d *timy2USBReader) SubscribeToImpulses() (chan string, func(), error) {
+	var done chan bool = make(chan bool)
+
+	close := func() {
+		done <- true
+	}
+
 	out := make(chan string, 128)
 	go func(end chan bool, out chan string) {
 		defer func() {
 			if err := recover(); err != nil {
 				log.Println("panic occurred:", err)
 				log.Printf("Stack Trace :\n%s", string(debug.Stack()))
-				out <- "EOF"
+				out <- EOF
 				return
 			}
 		}()
@@ -178,23 +186,25 @@ func (d *timy2USBReader) SubscribeToImpulses(done chan bool) (chan string, error
 		}
 		defer _cfg.Close()
 
-		intf, done, err := dev.DefaultInterface()
+		intf, interfaceClose, err := dev.DefaultInterface()
 		if err != nil {
 			log.Printf("ERR: %s.DefaultInterface(): %v", dev, err)
 			return
 		}
-		defer done()
+		defer interfaceClose()
 
 		// Read from endpoint
 		ep, err := intf.InEndpoint(0x01)
 		if err != nil {
 			log.Printf("ERR: %s.InEndpoint(0x01): %v", intf, err)
+
 			return
 		}
 
 		stream, err := ep.NewStream(ep.Endpoints[0x01].MaxPacketSize*10, 1)
 		if err != nil {
 			log.Printf("ERR: %s.InEndpoint(0x01).NewStream: %v", intf, err)
+			out <- EOF
 			return
 		}
 
@@ -240,5 +250,5 @@ func (d *timy2USBReader) SubscribeToImpulses(done chan bool) (chan string, error
 		}
 
 	}(done, out)
-	return out, nil
+	return out, close, nil
 }

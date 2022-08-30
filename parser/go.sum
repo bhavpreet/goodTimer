@@ -1,4 +1,6 @@
 github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220830020416-1f171d135dfd h1:z3HkeGZF5r2LEUIDhz4OtYVZEKAfW5QONs1cIx/ajNs=
 github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220830020416-1f171d135dfd/go.mod h1:D9z+ew2qRIGbOvlE4dLkx6FvY+x11wBObRPYIpZrnbo=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220830023112-7ac9636bf7fc h1:Zu3mJdQpCXlMKhfcQyze0jCpOQwBHaKiN7A5c9t8Bpg=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220830023112-7ac9636bf7fc/go.mod h1:D9z+ew2qRIGbOvlE4dLkx6FvY+x11wBObRPYIpZrnbo=
 github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3 h1:zN2lZNZRflqFyxVaTIU61KNKQ9C0055u9CAfpmqUvo4=
 github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3/go.mod h1:nPpo7qLxd6XL3hWJG/O60sR8ZKfMCiIoNap5GvD12KU=

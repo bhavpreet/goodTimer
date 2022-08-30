@@ -2,5 +2,5 @@ package driver
 
 type Reader interface {
 	Initialize(interface{}) error
-	SubscribeToImpulses(done chan bool) (chan string, error)
+	SubscribeToImpulses() (chan string, func(), error) // func = close() => defer close() 
 }
