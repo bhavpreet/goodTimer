@@ -7,11 +7,11 @@ import (
 	"time"
 
 	"github.com/bhavpreet/goodTimer/devices/timy2/usb"
+	parser "github.com/bhavpreet/goodTimer/praser"
 )
 
-// adjust port and speed for your setup
-const SERIAL_PORT_NAME = "/dev/cu.usbserial-0001"
-const SERIAL_PORT_BAUD = 38400
+// Channel on which impulses are send to the parser
+var impulseChan = make(chan string, 128)
 
 func scanForImpulse() error {
 	var err error
@@ -40,9 +40,10 @@ func scanForImpulse() error {
 	if err != nil {
 		return err
 	}
-	parseImpulse()
+	parser.ParseImpulse(impulseChan)
 	return nil
 }
+
 
 func main() {
 	for {

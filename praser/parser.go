@@ -1,4 +1,4 @@
-package main
+package parser
 
 import (
 	"errors"
@@ -10,45 +10,33 @@ import (
 	"github.com/golang-collections/collections/stack"
 )
 
-type impulseInput struct {
+type Impulse struct {
 	s string // Stores the impulse string
 	// Impulse format : B####bCxxbHH:MM:SS:zhtq(CR)
 	Channel   string
 	Timestamp time.Time
 }
 
-func newImpulseInput(s string) *impulseInput {
-	ii := new(impulseInput)
+func NewImpulse(s string) *Impulse {
+	ii := new(Impulse)
 	ii.s = timy2.B + strings.TrimSpace(s)
 	return ii
 }
 
 var startStack = stack.New()
 
-// Channel on which impulses are send to the parser
-var impulseChan = make(chan string, 128)
-
-func parseImpulse() {
-	var impulse string
-	for {
-		impulse = <-impulseChan
-		_parseImpulse(newImpulseInput(impulse))
-	}
-}
-
-
-func (ii *impulseInput) isValidImpulse() bool {
+func (ii *Impulse) isValidImpulse() bool {
 	if len(ii.s) == timy2.ImpulseLength && ii.s[:1] == timy2.B {
 		return true
 	}
 	return false
 }
 
-func (ii *impulseInput) String() string {
+func (ii *Impulse) String() string {
 	return ii.s
 }
 
-func (ii *impulseInput) parse() error {
+func (ii *Impulse) parse() error {
 	// Impulse format : B####bCxxbHH:MM:SS:zhtq(CR)
 	// Example        :  0033 C0  07:50:40.2828 00
 	//
@@ -101,7 +89,7 @@ func (t Timespan) Format(format string) string {
 	return _t.Format(format)
 }
 
-func _parseImpulse(ii *impulseInput) {
+func _parseImpulse(ii *Impulse) {
 	// Standard Time Format
 	if ii.isValidImpulse() {
 		err := ii.parse()
@@ -121,7 +109,7 @@ func _parseImpulse(ii *impulseInput) {
 				if start := startStack.Peek(); start == nil {
 					println("False Start", ii.Channel)
 				} else {
-					_start, _ := startStack.Pop().(*impulseInput)
+					_start, _ := startStack.Pop().(*Impulse)
 					var t Timespan
 					t = Timespan(ii.Timestamp.Sub(_start.Timestamp))
 					println("FINISH:", t.Format(durationFormat))
@@ -131,6 +119,12 @@ func _parseImpulse(ii *impulseInput) {
 		} else {
 			println("Unknown channel type " + ii.Channel)
 		}
+	}
+}
+
+func ParseImpulse(impulse string) Impulse {
+	for {
+		_parseImpulse(NewImpulse(impulse))
 	}
 }
 
