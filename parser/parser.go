@@ -124,7 +124,7 @@ func _parseImpulse(ii *Impulse) {
 
 func ParseImpulse(impulse string) Impulse {
 	for {
-		_parseImpulse(NewImpulse(impulse))
+		_parseImpulse(NewImpulse(impulse) )
 	}
 }
 
