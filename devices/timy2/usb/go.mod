@@ -8,4 +8,9 @@ require (
 	github.com/google/gousb v1.1.2
 )
 
-require github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220830091232-4d116804d37b // indirect
+require github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220830100408-63c481caf165 // indirect
+
+replace (
+	github.com/bhavpreet/goodTimer/devices/timy2/sim => /Users/bhav/go/src/github.com/bhavpreet/goodTimer/devices/timy2/sim
+	github.com/bhavpreet/goodTimer/devices/driver => /Users/bhav/go/src/github.com/bhavpreet/goodTimer/devices/driver
+	)

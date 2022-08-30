@@ -144,8 +144,12 @@ func (d *timy2USBReader) Initialize(cfg interface{}) error {
 func (d *timy2USBReader) SubscribeToImpulses() (chan string, func(), error) {
 	var done chan bool = make(chan bool)
 
+	isRunning := false
+
 	close := func() {
-		done <- true
+		if isRunning {
+			done <- true
+		}
 	}
 
 	out := make(chan string, 128)
@@ -237,6 +241,7 @@ func (d *timy2USBReader) SubscribeToImpulses() (chan string, func(), error) {
 		d.scanner = scanner
 
 		for {
+			isRunning = true
 			select {
 			case _end := <-end:
 				if _end {
@@ -245,6 +250,11 @@ func (d *timy2USBReader) SubscribeToImpulses() (chan string, func(), error) {
 			default:
 				if d.scanner.Scan() {
 					out <- d.scanner.Text()
+				} else {
+					println("Scanner Exited!")
+					isRunning = false
+					out <- EOF
+					return
 				}
 			}
 		}

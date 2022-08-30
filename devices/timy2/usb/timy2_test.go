@@ -12,10 +12,8 @@ func Test_timy2USBReader_SubscribeToImpulses(t *testing.T) {
 		scanner *bufio.Scanner
 	}
 	type args struct {
-		done chan bool
 	}
 
-	var done chan bool = make(chan bool)
 	tests := []struct {
 		name    string
 		fields  fields
@@ -25,9 +23,9 @@ func Test_timy2USBReader_SubscribeToImpulses(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
-			// fields:  fields{cfg: GetESP32USBConfig()},
-			fields:  fields{cfg: GetTimy2USBConfig()},
-			args:    args{done: done},
+			fields:  fields{cfg: GetESP32USBConfig()},
+			// fields:  fields{cfg: GetTimy2USBConfig()},
+			args:    args{},
 			wantErr: false,
 		},
 	}
@@ -39,7 +37,7 @@ func Test_timy2USBReader_SubscribeToImpulses(t *testing.T) {
 			}
 			d.Initialize(d.cfg)
 			fmt.Println("Initialized")
-			ch, err := d.SubscribeToImpulses(tt.args.done)
+			ch, close, err := d.SubscribeToImpulses()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("timy2USBReader.SubscribeToImpulses() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -47,9 +45,13 @@ func Test_timy2USBReader_SubscribeToImpulses(t *testing.T) {
 
 			// for i := 0; i < 10; i++ {
 			for {
-				fmt.Println(<-ch)
+				res := <-ch
+				println(res)
+				if res == "EOF" {
+					break
+				}
 			}
-			done <- true
+			close()
 		})
 	}
 }

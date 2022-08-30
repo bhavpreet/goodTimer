@@ -124,13 +124,20 @@ func _parseImpulse(ii *Impulse) {
 // return nil in `chan *Impulse in case of error`
 func ParseImpulse(impulseChan chan string) (chan *Impulse, func(), error) {
 	var done chan bool = make(chan bool)
+	var exited bool
 	close := func() {
-		done <- true
+		if !exited {
+			done <- true
+		}
 	}
 
 	var ic chan *Impulse = make(chan *Impulse, 128)
 
 	go func() {
+		defer func() {
+			exited = true
+		}()
+
 		for {
 			select {
 			case <-done:

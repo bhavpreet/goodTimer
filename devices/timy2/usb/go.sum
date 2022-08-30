@@ -10,6 +10,8 @@ github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220829143431-03f1009b633b 
 github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220829143431-03f1009b633b/go.mod h1:D9z+ew2qRIGbOvlE4dLkx6FvY+x11wBObRPYIpZrnbo=
 github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220830091232-4d116804d37b h1:ZbXfSzHx6Puz4i5PfPaSKDYI+8ALthZWU4MAOC2JKlk=
 github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220830091232-4d116804d37b/go.mod h1:D9z+ew2qRIGbOvlE4dLkx6FvY+x11wBObRPYIpZrnbo=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220830100408-63c481caf165 h1:ksdJEYPgqRu1HpJ++aNtar3kiPUwYG7Rh/2//J2VADA=
+github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220830100408-63c481caf165/go.mod h1:D9z+ew2qRIGbOvlE4dLkx6FvY+x11wBObRPYIpZrnbo=
 github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220828154614-bf54369879bd h1:BDwOR3WejecSXIWmg/cH2OVbqPZo67vPVxB0REUJRyk=
 github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220828154614-bf54369879bd/go.mod h1:TEilwRMj/JJj2ZfM31SS/NJUl4ifB4Y59MnrhDghi2k=
 github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220829115307-8a6306606ea1 h1:9DYp80bM5oKxiMoqK4Z0ec1iXJe2YLZEUZY0ipuRfT4=
