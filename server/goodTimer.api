@@ -1,0 +1,115 @@
+syntax = "v1"
+
+info (
+	title: "GoodTimer"
+	desc: // TODO: add description
+	author: "Bhavpreet Singh"
+	email: "bhavpreet@gmail.com"
+)
+
+type AddRoundRequest {
+	Name string `json:"name"`
+}
+
+type Round {
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	Status    string `json:"status,options=RUNNING|FINISHED"`
+	ISCurrent bool   `json:"is_current"`
+}
+
+type ListRoundsResp {
+	Rounds []Round `json:"rounds"`
+}
+
+type Bib {
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	Status    string `json:"status,options=RUNNING|FINISHED"`
+	ISCurrent bool   `json:"is_current"`
+
+	// TIME
+	StartTime string `json:"start_time"`
+	EndTime   string `json:"end_time"`
+	Duration  string `json:"duration"`
+}
+
+type GetRoundRequest {
+	ID string `path:"id"`
+}
+
+type UpdateRoundRequest {
+	Name string `json:"name"`
+}
+
+type DeleteRoundRequest {
+	Round string `path:"round"`
+}
+
+type AddBibRequest {
+	Round string `path:"round"`
+	Bib   string `json:"bib"`
+}
+
+type GetBibRequest {
+	Round string `path:"round"`
+	Bib   string `path:"id"`
+}
+
+type DeleteBibRequest {
+	Round string `path:"round"`
+	ID    string `path:"id"`
+}
+
+type SetRoundCurrentRequest {
+	Round string `path:"round"`
+}
+
+type SetBibStatusRequest {
+	Round  string `path:"round"`
+	Status string `path:"status" json:"status,options=RUNNING|FINISHED"`
+}
+
+type SetBibCurrentRequest {
+	Round string `path:"round"`
+	Bib   string `path:"bib"`
+}
+
+type ListBibsRequest {
+	Round string `path:"round"`
+}
+
+service goodTimer-api {
+	@handler AddRound
+	post /round(AddRoundRequest) returns(Round)
+	
+	@handler ListRounds
+	get /rounds returns(ListRoundsResp)
+	
+	@handler DeleteRound
+	delete /round/:round(DeleteRoundRequest)
+	
+	@handler SetRoundCurrent
+	patch /round/:round/setCurrent(SetRoundCurrentRequest)
+	
+	@handler GetCurrentRound
+	get /round/getCurrent returns(string)
+	
+	@handler AddBib
+	post /round/:round/bib(AddBibRequest) returns(Bib)
+	
+	@handler GetBib
+	get /round/:round/bib/:bib(GetBibRequest) returns(Bib)
+	
+	@handler ListBibs
+	get /round/:round/bibs(ListBibsRequest) returns([]Bib)
+	
+	@handler DeleteBib
+	delete /round/:round/bib/:bib
+	
+	@handler SetBibStatus
+	patch /round/:round/bib/:bib/setStatus(SetBibStatusRequest)
+	
+	@handler SetBibCurrent
+	patch /round/:round/bib/:bib/setCurrent(SetBibCurrentRequest)
+}
