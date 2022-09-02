@@ -55,7 +55,7 @@ func Serve() {
 		for {
 			err := t.Run()
 			if err != nil {
-				log.Printf("Error occurred  while running the timer, err: %v", err)
+				log.Printf("Error occurred while running the timer, err: %v", err)
 				log.Println("Sleeping for 5 sec...")
 				time.Sleep(5 * time.Second)
 			}

@@ -1,8 +1,6 @@
 package main
 
-import (
-	"github.com/bhavpreet/goodTimer/server"
-)
+import "github.com/bhavpreet/goodTimer/server"
 
 func main() {
 	server.Serve()
