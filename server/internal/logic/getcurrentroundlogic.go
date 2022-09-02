@@ -5,6 +5,7 @@ import (
 
 	"github.com/bhavpreet/goodTimer/server/db"
 	"github.com/bhavpreet/goodTimer/server/internal/svc"
+	"github.com/bhavpreet/goodTimer/server/internal/types"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -22,24 +23,25 @@ func NewGetCurrentRoundLogic(ctx context.Context, svcCtx *svc.ServiceContext) *G
 	}
 }
 
-func (l *GetCurrentRoundLogic) GetCurrentRound() (resp string, err error) {
+func (l *GetCurrentRoundLogic) GetCurrentRound() (resp *types.GetCurrentRoundResp, err error) {
 	// todo: add your logic here and delete this line
 	return getCurrentRound(l.ctx, l.svcCtx.DB)
 }
 
-func getCurrentRound(ctx context.Context, db db.DB) (resp string, err error) {
+func getCurrentRound(ctx context.Context, db db.DB) (resp *types.GetCurrentRoundResp, err error) {
 	c, err := db.GetCollection(ctx, "__current")
 	if err != nil {
 		logx.Errorf("Unable to get collection name __current")
-		return "", err
+		return nil, err
 	}
 
 	ret, err := c.Read(ctx, []byte("ROUND_CURRENT"))
 	if err != nil {
 		logx.Errorf("error reading current_round, err: %v", err)
-		return "", err
+		return nil, err
 	}
 
 	logx.Infof("Current round is %s", string(ret))
-	return string(ret), nil
+	resp = &types.GetCurrentRoundResp{CurrentRound: string(ret)}
+	return resp, nil
 }

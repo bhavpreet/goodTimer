@@ -1,20 +1,20 @@
-module github.com/bhavpreet/goodTimer/server
+// +heroku goVersion go1.17
 
-go 1.19
+module github.com/bhavpreet/goodTimer
 
-require (
-	github.com/bhavpreet/goodTimer/server/db v0.0.0-20220902065809-17305cf89fb1
-	github.com/bhavpreet/goodTimer/timer v0.0.0-20220902070310-1c96eedee4bb
-	github.com/zeromicro/go-zero v1.4.0
-)
+go 1.17
+
+require github.com/bhavpreet/goodTimer/server v0.0.0-20220902091551-479b48589627
 
 require (
 	github.com/beorn7/perks v1.0.1 // indirect
-	github.com/bhavpreet/goodTimer/devices/driver v0.0.0-20220902065809-17305cf89fb1 // indirect
-	github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220902063137-b260eb11be32 // indirect
-	github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220902070310-1c96eedee4bb // indirect
-	github.com/bhavpreet/goodTimer/devices/timy2/usb v0.0.0-20220902063137-b260eb11be32 // indirect
-	github.com/bhavpreet/goodTimer/parser v0.0.0-20220902070310-1c96eedee4bb // indirect
+	github.com/bhavpreet/goodTimer/devices/driver v0.0.0-20220902091551-479b48589627 // indirect
+	github.com/bhavpreet/goodTimer/devices/timy2 v0.0.0-20220902091551-479b48589627 // indirect
+	github.com/bhavpreet/goodTimer/devices/timy2/sim v0.0.0-20220902091551-479b48589627 // indirect
+	github.com/bhavpreet/goodTimer/devices/timy2/usb v0.0.0-20220902091551-479b48589627 // indirect
+	github.com/bhavpreet/goodTimer/parser v0.0.0-20220902091551-479b48589627 // indirect
+	github.com/bhavpreet/goodTimer/server/db v0.0.0-20220902091551-479b48589627 // indirect
+	github.com/bhavpreet/goodTimer/timer v0.0.0-20220902091551-479b48589627 // indirect
 	github.com/boltdb/bolt v1.3.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/fatih/color v1.13.0 // indirect
@@ -35,6 +35,7 @@ require (
 	github.com/prometheus/common v0.37.0 // indirect
 	github.com/prometheus/procfs v0.8.0 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
+	github.com/zeromicro/go-zero v1.4.0 // indirect
 	go.opentelemetry.io/otel v1.9.0 // indirect
 	go.opentelemetry.io/otel/exporters/jaeger v1.9.0 // indirect
 	go.opentelemetry.io/otel/exporters/zipkin v1.9.0 // indirect

@@ -53,7 +53,7 @@ type AddBibRequest {
 
 type GetBibRequest {
 	Round string `path:"round"`
-	Bib   string `path:"id"`
+	Bib   string `path:"bib"`
 }
 
 type DeleteBibRequest {
@@ -75,8 +75,24 @@ type SetBibCurrentRequest {
 	Bib   string `path:"bib"`
 }
 
-type ListBibsRequest {
+type GetCurrentBibReq {
 	Round string `path:"round"`
+}
+
+type GetCurrentBibResp {
+	CurrentBib string `json:"current_bib"`
+}
+
+type ListBibsReq {
+	Round string `path:"round"`
+}
+
+type ListBibsResp {
+	Bibs []Bib `json:"bibs"`
+}
+
+type GetCurrentRoundResp {
+	CurrentRound string `json:"current_round"`
 }
 
 service goodTimer-api {
@@ -93,7 +109,10 @@ service goodTimer-api {
 	patch /round/:round/setCurrent(SetRoundCurrentRequest)
 	
 	@handler GetCurrentRound
-	get /round/getCurrent returns(string)
+	get /round/getCurrent returns(GetCurrentRoundResp)
+	
+	@handler GetCurrentBib
+	get /round/:round/bib/getCurrent(GetCurrentBibReq) returns(GetCurrentBibResp)
 	
 	@handler AddBib
 	post /round/:round/bib(AddBibRequest) returns(Bib)
@@ -102,7 +121,7 @@ service goodTimer-api {
 	get /round/:round/bib/:bib(GetBibRequest) returns(Bib)
 	
 	@handler ListBibs
-	get /round/:round/bibs(ListBibsRequest) returns([]Bib)
+	get /round/:round/bibs(ListBibsReq) returns(ListBibsResp)
 	
 	@handler DeleteBib
 	delete /round/:round/bib/:bib

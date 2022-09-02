@@ -24,7 +24,7 @@ func NewListBibsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListBibs
 	}
 }
 
-func (l *ListBibsLogic) ListBibs(req *types.ListBibsRequest) (resp []types.Bib, err error) {
+func (l *ListBibsLogic) ListBibs(req *types.ListBibsReq) (resp *types.ListBibsResp, err error) {
 	// todo: add your logic here and delete this line
 	c, err := l.svcCtx.DB.GetCollection(l.ctx, req.Round)
 	if err != nil {
@@ -37,6 +37,14 @@ func (l *ListBibsLogic) ListBibs(req *types.ListBibsRequest) (resp []types.Bib, 
 		return nil, err
 	}
 
+	currentBib, err :=
+		getCurrentBib(l.ctx, l.svcCtx, &types.GetCurrentBibReq{Round: req.Round})
+	if err != nil {
+		logx.Errorf("Unable to get current bib")
+		return nil, err
+	}
+
+	resp = &types.ListBibsResp{}
 	bibs := []types.Bib{}
 	for _, r := range ret {
 		bib := &types.Bib{}
@@ -46,7 +54,11 @@ func (l *ListBibsLogic) ListBibs(req *types.ListBibsRequest) (resp []types.Bib, 
 			return nil, err
 		}
 
+		if bib.ID == currentBib.CurrentBib {
+			bib.ISCurrent = true
+		}
 		bibs = append(bibs, *bib)
 	}
-	return bibs, nil
+	resp.Bibs = bibs
+	return resp, nil
 }

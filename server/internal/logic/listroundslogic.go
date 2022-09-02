@@ -46,7 +46,7 @@ func (l *ListRoundsLogic) ListRounds() (resp *types.ListRoundsResp, err error) {
 		if _c == "__current" {
 			continue
 		}
-		if _c == currentRound {
+		if _c == currentRound.CurrentRound {
 			isCurrent = true
 		}
 		resp.Rounds = append(resp.Rounds, types.Round{Name: _c, ISCurrent: isCurrent})

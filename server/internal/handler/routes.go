@@ -38,6 +38,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: GetCurrentRoundHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodGet,
+				Path:    "/round/:round/bib/getCurrent",
+				Handler: GetCurrentBibHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodPost,
 				Path:    "/round/:round/bib",
 				Handler: AddBibHandler(serverCtx),

@@ -15,7 +15,7 @@ func NewTimy2SimDeviceReader() driver.Reader {
 	return new(defaultTimy2USBSimReader)
 }
 
-func NewTimy2SimReader() USBReader {
+func NewTimy2SimReader() driver.Reader {
 	return new(defaultTimy2USBSimReader)
 }
 

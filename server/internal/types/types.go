@@ -45,7 +45,7 @@ type AddBibRequest struct {
 
 type GetBibRequest struct {
 	Round string `path:"round"`
-	Bib   string `path:"id"`
+	Bib   string `path:"bib"`
 }
 
 type DeleteBibRequest struct {
@@ -67,6 +67,22 @@ type SetBibCurrentRequest struct {
 	Bib   string `path:"bib"`
 }
 
-type ListBibsRequest struct {
+type GetCurrentBibReq struct {
 	Round string `path:"round"`
+}
+
+type GetCurrentBibResp struct {
+	CurrentBib string `json:"current_bib"`
+}
+
+type ListBibsReq struct {
+	Round string `path:"round"`
+}
+
+type ListBibsResp struct {
+	Bibs []Bib `json:"bibs"`
+}
+
+type GetCurrentRoundResp struct {
+	CurrentRound string `json:"current_round"`
 }
