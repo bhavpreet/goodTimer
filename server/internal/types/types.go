@@ -34,6 +34,12 @@ type UpdateRoundRequest struct {
 	Name string `json:"name"`
 }
 
+type UpdateBibRequest struct {
+	Round  string `path:"round"`
+	Bib    string `path:"bib"`
+	BibDoc Bib    `json:"bib_doc"`
+}
+
 type DeleteRoundRequest struct {
 	Round string `path:"round"`
 }

@@ -40,5 +40,14 @@ func (l *AddRoundLogic) AddRound(req *types.AddRoundRequest) (resp *types.Round,
 		return nil, err
 	}
 
+	// check if there is a current round, if not then set
+	currentRound, err := getCurrentRound(l.ctx, l.svcCtx.DB)
+	if err != nil || currentRound.CurrentRound == "" {
+		scl := &SetRoundCurrentLogic{ctx: l.ctx, svcCtx: l.svcCtx}
+		err = scl.SetRoundCurrent(&types.SetRoundCurrentRequest{Round: r.Name})
+		if err != nil {
+			return nil, err
+		}
+	}
 	return r, nil
 }

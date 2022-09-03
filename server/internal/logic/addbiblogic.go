@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 
 	"github.com/bhavpreet/goodTimer/server/internal/svc"
 	"github.com/bhavpreet/goodTimer/server/internal/types"
@@ -33,9 +34,25 @@ func (l *AddBibLogic) AddBib(req *types.AddBibRequest) (resp *types.Bib, err err
 		return nil, err
 	}
 
+	setCurrent := false
+	currentBib, err := getCurrentBib(l.ctx, l.svcCtx, &types.GetCurrentBibReq{Round: req.Round})
+	fmt.Printf("CUrrent bib = %v, %v\n", currentBib, err)
+	if err != nil || currentBib.CurrentBib == "" {
+		setCurrent = true
+		scl := SetBibCurrentLogic{
+			Logger: l.Logger,
+			ctx:    l.ctx,
+			svcCtx: l.svcCtx,
+		}
+		scl.SetBibCurrent(&types.SetBibCurrentRequest{
+			Round: req.Round,
+			Bib:   req.Bib,
+		})
+	}
+
 	bib := &types.Bib{
-		ID        : req.Bib,
-		Status    : "NONE",
+		ID:        req.Bib,
+		Status:    "NONE",
 		ISCurrent: false,
 	}
 
@@ -49,6 +66,10 @@ func (l *AddBibLogic) AddBib(req *types.AddBibRequest) (resp *types.Bib, err err
 	if err != nil {
 		logx.Errorf("Unable to Write %+v, err: %v", bib, err)
 		return nil, err
+	}
+
+	if setCurrent {
+		bib.ISCurrent = true
 	}
 
 	return bib, err

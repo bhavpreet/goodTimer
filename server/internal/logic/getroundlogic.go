@@ -25,6 +25,5 @@ func NewGetRoundLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetRound
 
 func (l *GetRoundLogic) GetRound(req *types.GetRoundRequest) (resp *types.Round, err error) {
 	// todo: add your logic here and delete this line
-
 	return
 }

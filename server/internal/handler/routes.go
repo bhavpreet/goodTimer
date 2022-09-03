@@ -58,6 +58,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: ListBibsHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodPatch,
+				Path:    "/round/:round/bib/:bib",
+				Handler: UpdateBibHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodDelete,
 				Path:    "/round/:round/bib/:bib",
 				Handler: DeleteBibHandler(serverCtx),

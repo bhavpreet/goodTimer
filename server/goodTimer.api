@@ -42,6 +42,12 @@ type UpdateRoundRequest {
 	Name string `json:"name"`
 }
 
+type UpdateBibRequest {
+	Round  string `path:"round"`
+	Bib    string `path:"bib"`
+	BibDoc Bib    `json:"bib_doc"`
+}
+
 type DeleteRoundRequest {
 	Round string `path:"round"`
 }
@@ -122,6 +128,9 @@ service goodTimer-api {
 	
 	@handler ListBibs
 	get /round/:round/bibs(ListBibsReq) returns(ListBibsResp)
+	
+	@handler UpdateBib
+	patch /round/:round/bib/:bib(UpdateBibRequest) returns(Bib)
 	
 	@handler DeleteBib
 	delete /round/:round/bib/:bib
