@@ -32,14 +32,8 @@ func (l *UpdateBibLogic) UpdateBib(req *types.UpdateBibRequest) (resp *types.Bib
 	if req.BibNo != "" {
 		resp.No = req.BibNo
 	}
-
-	if req.StartTime != "" {
-		resp.StartTime = req.StartTime
-	}
-
-	if req.EndTime != "" {
-		resp.EndTime = req.EndTime
-	}
+	resp.StartTime = req.StartTime
+	resp.EndTime = req.EndTime
 
 	err = l.svcCtx.Update(req.ID, resp)
 	if err != nil {
