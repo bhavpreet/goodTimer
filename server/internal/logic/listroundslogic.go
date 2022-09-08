@@ -25,31 +25,29 @@ func NewListRoundsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListRo
 
 func (l *ListRoundsLogic) ListRounds() (resp *types.ListRoundsResp, err error) {
 	// todo: add your logic here and delete this line
-	c, err := l.svcCtx.DB.ListCollections(l.ctx)
+
+	var rounds []types.Round
+	err  = l.svcCtx.Find(&rounds, nil)
 	if err != nil {
-		logx.Errorf("Error occured while listing collecitons, err :%v", err)
 		return nil, err
 	}
 
-	currentRound, err := getCurrentRound(l.ctx, l.svcCtx.DB)
+	current, err := GetCurrent(l.svcCtx.Store)
 	if err != nil {
-		logx.Errorf("Error occurred getCurrentRound")
 		return nil, err
+	}
+
+	for i := range rounds {
+		if rounds[i].ID == current.CurrentRound {
+			rounds[i].ISCurrent = true
+			break
+		}
 	}
 
 	resp = new(types.ListRoundsResp)
-	resp.Rounds = []types.Round{}
-
-	for _, _c := range c {
-		isCurrent := false
-
-		if _c == "__current" {
-			continue
-		}
-		if _c == currentRound.CurrentRound {
-			isCurrent = true
-		}
-		resp.Rounds = append(resp.Rounds, types.Round{Name: _c, ISCurrent: isCurrent})
+	if rounds == nil {
+		rounds = []types.Round{}
 	}
-	return
+	resp.Rounds = rounds
+	return resp, nil
 }

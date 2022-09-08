@@ -9,23 +9,24 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type DeleteRoundLogic struct {
+type GetCurrentLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewDeleteRoundLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DeleteRoundLogic {
-	return &DeleteRoundLogic{
+func NewGetCurrentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetCurrentLogic {
+	return &GetCurrentLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *DeleteRoundLogic) DeleteRound(req *types.DeleteRoundRequest) error {
+func (l *GetCurrentLogic) GetCurrent() (resp *types.Current, err error) {
 	// todo: add your logic here and delete this line
 
-	err := l.svcCtx.Store.Delete(req.Round, &types.Round{})
-	return err
+	resp = new(types.Current)
+	l.svcCtx.Get("current", resp)
+	return
 }

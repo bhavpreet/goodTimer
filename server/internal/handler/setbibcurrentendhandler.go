@@ -9,16 +9,16 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func SetBibCurrentHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func SetBibCurrentEndHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.SetBibCurrentRequest
+		var req types.SetBibCurrentReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.Error(w, err)
 			return
 		}
 
-		l := logic.NewSetBibCurrentLogic(r.Context(), svcCtx)
-		err := l.SetBibCurrent(&req)
+		l := logic.NewSetBibCurrentEndLogic(r.Context(), svcCtx)
+		err := l.SetBibCurrentEnd(&req)
 		if err != nil {
 			httpx.Error(w, err)
 		} else {

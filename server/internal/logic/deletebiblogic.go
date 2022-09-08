@@ -4,6 +4,8 @@ import (
 	"context"
 
 	"github.com/bhavpreet/goodTimer/server/internal/svc"
+	"github.com/bhavpreet/goodTimer/server/internal/types"
+
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -21,8 +23,8 @@ func NewDeleteBibLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DeleteB
 	}
 }
 
-func (l *DeleteBibLogic) DeleteBib() error {
+func (l *DeleteBibLogic) DeleteBib(req *types.DeleteBibRequest) error {
 	// todo: add your logic here and delete this line
 
-	return nil
+	return l.svcCtx.Store.Delete(req.ID, &types.Bib{})
 }

@@ -33,14 +33,14 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: SetRoundCurrentHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodGet,
-				Path:    "/round/getCurrent",
-				Handler: GetCurrentRoundHandler(serverCtx),
+				Method:  http.MethodPatch,
+				Path:    "/round/:round",
+				Handler: UpdateRoundHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/round/:round/bib/getCurrent",
-				Handler: GetCurrentBibHandler(serverCtx),
+				Path:    "/round/getCurrent",
+				Handler: GetCurrentHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
@@ -59,7 +59,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPatch,
-				Path:    "/round/:round/bib/:bib",
+				Path:    "/round/:round/bib/:id",
 				Handler: UpdateBibHandler(serverCtx),
 			},
 			{
@@ -74,8 +74,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPatch,
-				Path:    "/round/:round/bib/:bib/setCurrent",
-				Handler: SetBibCurrentHandler(serverCtx),
+				Path:    "/round/:round/bib/:bib/setCurrentStart",
+				Handler: SetBibCurrentStartHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPatch,
+				Path:    "/round/:round/bib/:bib/setCurrentEnd",
+				Handler: SetBibCurrentEndHandler(serverCtx),
 			},
 		},
 	)

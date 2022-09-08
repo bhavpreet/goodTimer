@@ -33,5 +33,5 @@ func (d *defaultTimy2USBSimReader) SubscribeToImpulses() (chan string, func(), e
 	close := func() {
 		done <- true
 	}
-	return d.tsim.GenerateImpulses(done, time.Second), close, nil
+	return d.tsim.GenerateImpulses(done, 5 * time.Second), close, nil
 }

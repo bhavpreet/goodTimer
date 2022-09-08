@@ -1,12 +1,12 @@
 package svc
 
 import (
-	"github.com/bhavpreet/goodTimer/server/db"
 	"github.com/bhavpreet/goodTimer/server/internal/config"
+	bh "github.com/timshannon/bolthold"
 )
 
 type ServiceContext struct {
-	db.DB
+	*bh.Store
 	Config config.Config
 }
 

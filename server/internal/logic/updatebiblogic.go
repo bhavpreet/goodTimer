@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"encoding/json"
 
 	"github.com/bhavpreet/goodTimer/server/internal/svc"
 	"github.com/bhavpreet/goodTimer/server/internal/types"
@@ -27,34 +26,27 @@ func NewUpdateBibLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateB
 func (l *UpdateBibLogic) UpdateBib(req *types.UpdateBibRequest) (resp *types.Bib, err error) {
 	// todo: add your logic here and delete this line
 
-	getBibLogic := NewGetBibLogic(l.ctx, l.svcCtx)
-	bib, err := getBibLogic.GetBib(&types.GetBibRequest{
-		Round: req.Round,
-		Bib:   req.Bib,
-	})
+	resp = new(types.Bib)
+	l.svcCtx.Get(req.ID, resp)
 
-	bib.ID = req.BibDoc.ID
-	bib.StartTime = req.BibDoc.StartTime
-	bib.EndTime = req.BibDoc.EndTime
+	if req.BibNo != "" {
+		resp.No = req.BibNo
+	}
 
-	j, err := json.Marshal(bib)
+	if req.StartTime != "" {
+		resp.StartTime = req.StartTime
+	}
+
+	if req.EndTime != "" {
+		resp.EndTime = req.EndTime
+	}
+
+	err = l.svcCtx.Update(req.ID, resp)
 	if err != nil {
-		logx.Errorf("Unable to get json marshal %+v", bib)
 		return nil, err
 	}
 
-	c, err := l.svcCtx.DB.GetCollection(l.ctx, req.Round)
-	if err != nil {
-		logx.Errorf("Unable to get collection name %v", req.Round)
-		return nil, err
-	}
-
-	err = c.Write(l.ctx, []byte(req.Bib), j)
-	if err != nil {
-		logx.Errorf("Unable to Write %+v, err: %v", bib, err)
-		return nil, err
-	}
-
-	return bib, ni
-	l
+	resp = new(types.Bib)
+	err = l.svcCtx.Get(req.ID, resp)
+	return resp, err
 }

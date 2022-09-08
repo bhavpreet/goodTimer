@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/bhavpreet/goodTimer/devices/timy2"
-	"github.com/golang-collections/collections/stack"
 )
 
 type Impulse struct {
@@ -22,8 +21,6 @@ func NewImpulse(s string) *Impulse {
 	ii.s = timy2.B + strings.TrimSpace(s)
 	return ii
 }
-
-var startStack = stack.New()
 
 func (ii *Impulse) IsValidImpulse() bool {
 	if len(ii.s) == timy2.ImpulseLength && ii.s[:1] == timy2.B {
@@ -82,7 +79,7 @@ func (ii *Impulse) parse() error {
 
 type Timespan time.Duration
 
-const durationFormat = "15:04:05.000"
+const DurationFormat = "15:04:05.000"
 
 func (t Timespan) Format(format string) string {
 	_t := time.Date(0, 0, 0, 0, 0, 0, int(time.Duration(t).Nanoseconds()), time.UTC)
@@ -99,25 +96,6 @@ func _parseImpulse(ii *Impulse) {
 				"err:", err.Error())
 		}
 		// println("Got Impulse:", "["+ii.String()+"]")
-
-		// check channel type / start or end
-		if channelType, ok := timy2.ChannelType[ii.Channel]; ok {
-			switch channelType {
-			case timy2.START_IMPULSE:
-				startStack.Push(ii)
-			case timy2.END_IMPULSE:
-				if start := startStack.Peek(); start == nil {
-					println("False Start", ii.Channel)
-				} else {
-					_start, _ := startStack.Pop().(*Impulse)
-					var t Timespan
-					t = Timespan(ii.Timestamp.Sub(_start.Timestamp))
-					println("FINISH:", t.Format(durationFormat))
-				}
-			}
-		} else {
-			println("Unknown channel type " + ii.Channel)
-		}
 	}
 }
 

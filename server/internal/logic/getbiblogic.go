@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"encoding/json"
 
 	"github.com/bhavpreet/goodTimer/server/internal/svc"
 	"github.com/bhavpreet/goodTimer/server/internal/types"
@@ -27,24 +26,30 @@ func NewGetBibLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetBibLogi
 func getBib(ctx context.Context,
 	svcCtx *svc.ServiceContext,
 	req *types.GetBibRequest) (resp *types.Bib, err error) {
-	c, err := svcCtx.DB.GetCollection(ctx, req.Round)
+
+	resp = new(types.Bib)
+	err = svcCtx.Get(req.Bib, resp)
 	if err != nil {
-		logx.Errorf("Unable to get collection name %v", req.Round)
 		return nil, err
 	}
 
-	bib, err := c.Read(ctx, []byte(req.Bib))
+	r, err := NewGetRoundLogic(ctx, svcCtx).GetRound(&types.GetRoundRequest{
+		ID: req.Round,
+	})
 	if err != nil {
-		logx.Errorf(
-			"Unable to read bib %s, from collection name %s, err: %v", req.Bib, req.Round, err)
+		logx.Errorf("Did not find the Round, %s", req.Round)
 		return nil, err
 	}
-	resp = &types.Bib{}
-	err = json.Unmarshal(bib, resp)
-	if err != nil {
-		logx.Errorf("Unable to unmarshal bib")
-		return nil, err
+	resp.Round = *r
+
+	current, _ := GetCurrent(svcCtx.Store)
+	if current.CurrentStartBib == resp.ID {
+		resp.ISCurrentStart = true
 	}
+	if current.CurrentEndBib == resp.ID {
+		resp.ISCurrentEnd = true
+	}
+
 	return resp, nil
 }
 
@@ -53,17 +58,6 @@ func (l *GetBibLogic) GetBib(req *types.GetBibRequest) (resp *types.Bib, err err
 	resp, err = getBib(l.ctx, l.svcCtx, req)
 	if err != nil {
 		return nil, err
-	}
-
-	currentBib, err :=
-		getCurrentBib(l.ctx, l.svcCtx, &types.GetCurrentBibReq{Round: req.Round})
-	if err != nil {
-		logx.Errorf("Unable to get current bib")
-		return nil, err
-	}
-
-	if resp.ID == currentBib.CurrentBib {
-		resp.ISCurrent = true
 	}
 
 	return resp, nil

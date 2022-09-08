@@ -25,6 +25,19 @@ func NewUpdateRoundLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Updat
 
 func (l *UpdateRoundLogic) UpdateRound(req *types.UpdateRoundRequest) (resp *types.Round, err error) {
 	// todo: add your logic here and delete this line
+	resp = new(types.Round)
+	l.svcCtx.Get(req.ID, resp)
 
-	return
+	if req.Name != "" {
+		resp.Name = req.Name
+	}
+
+	err = l.svcCtx.Update(req.ID, resp)
+	if err != nil {
+		return nil, err
+	}
+
+	resp = new(types.Round)
+	err = l.svcCtx.Get(req.ID, resp)
+	return resp, err
 }

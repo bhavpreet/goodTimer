@@ -6,24 +6,34 @@ type AddRoundRequest struct {
 }
 
 type Round struct {
-	ID        string `json:"id"`
-	Name      string `json:"name"`
+	ID        string `json:"id" storm:"id,unique"`
+	Name      string `json:"name" storm:"unique"`
 	Status    string `json:"status,options=RUNNING|FINISHED"`
 	ISCurrent bool   `json:"is_current"`
+}
+
+type Bib struct {
+	ID             string `json:"id" storm:"id,unique"`
+	No             string `json:"no" storm:"unique"`
+	ParentRoundID  string `json:"-" storm:"index"`
+	Round          Round  `json:"round"`
+	Status         string `json:"status,options=RUNNING|FINISHED"`
+	ISCurrentStart bool   `json:"is_current_start"`
+	ISCurrentEnd   bool   `json:"is_current_end"`
+	StartTime      string `json:"start_time"`
+	EndTime        string `json:"end_time"`
+	Duration       string `json:"duration"`
+}
+
+type Current struct {
+	ID              string `json:"id"`
+	CurrentRound    string `json:"current_round"`
+	CurrentStartBib string `json:"current_start_bib"`
+	CurrentEndBib   string `json:"current_end_bib"`
 }
 
 type ListRoundsResp struct {
 	Rounds []Round `json:"rounds"`
-}
-
-type Bib struct {
-	ID        string `json:"id"`
-	Name      string `json:"name"`
-	Status    string `json:"status,options=RUNNING|FINISHED"`
-	ISCurrent bool   `json:"is_current"`
-	StartTime string `json:"start_time"`
-	EndTime   string `json:"end_time"`
-	Duration  string `json:"duration"`
 }
 
 type GetRoundRequest struct {
@@ -31,13 +41,16 @@ type GetRoundRequest struct {
 }
 
 type UpdateRoundRequest struct {
+	ID   string `path:"round"`
 	Name string `json:"name"`
 }
 
 type UpdateBibRequest struct {
-	Round  string `path:"round"`
-	Bib    string `path:"bib"`
-	BibDoc Bib    `json:"bib_doc"`
+	Round     string `path:"round"`
+	ID        string `path:"id"`
+	BibNo     string `json:"bib_no"`
+	StartTime string `json:"start_time"`
+	EndTime   string `json:"end_time"`
 }
 
 type DeleteRoundRequest struct {
@@ -68,17 +81,9 @@ type SetBibStatusRequest struct {
 	Status string `path:"status" json:"status,options=RUNNING|FINISHED"`
 }
 
-type SetBibCurrentRequest struct {
+type SetBibCurrentReq struct {
 	Round string `path:"round"`
 	Bib   string `path:"bib"`
-}
-
-type GetCurrentBibReq struct {
-	Round string `path:"round"`
-}
-
-type GetCurrentBibResp struct {
-	CurrentBib string `json:"current_bib"`
 }
 
 type ListBibsReq struct {
