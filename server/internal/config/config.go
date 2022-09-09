@@ -7,5 +7,5 @@ import (
 
 type Config struct {
 	rest.RestConf
-	TimerType timer.TimerType `yaml:"TimerType"`
+	TimerType timer.TimerType
 }

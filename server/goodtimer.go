@@ -48,6 +48,7 @@ func Serve() {
 		c.Host = host
 	}
 
+	fmt.Printf("CFG = %+v", c)
 	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()
 
@@ -78,7 +79,7 @@ func Serve() {
 	// Timer
 	// t, err := timer.NewTimer(&timer.TimerConfig{TimerType: c.TimerType}) // TODO
 	t, err := timer.NewTimer(
-		&timer.TimerConfig{TimerType: timer.SIMULATOR},
+		&timer.TimerConfig{TimerType: c.TimerType},
 		processImpulse,
 	)
 	if err != nil {
