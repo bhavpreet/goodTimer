@@ -34,7 +34,7 @@ func (l *SetBibCurrentEndLogic) SetBibCurrentEnd(req *types.SetBibCurrentReq) er
 		return err
 	}
 
-	if bib.StartTime != "" || bib.EndTime == "" {
+	if bib.StartTime != "DNS" && bib.EndTime == "" {
 		current, _ := GetCurrent(l.svcCtx.Store)
 		current.CurrentRound = req.Round
 		current.CurrentEndBib = req.Bib

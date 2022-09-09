@@ -23,7 +23,7 @@ import (
 	"github.com/zeromicro/go-zero/rest"
 )
 
-var configFile = flag.String("f", "etc/goodtimer-api.yaml", "the config file")
+var configFile = flag.String("f", "server/etc/goodtimer-api.yaml", "the config file")
 var store *bolthold.Store
 
 func Serve() {

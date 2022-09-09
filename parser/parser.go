@@ -82,8 +82,9 @@ type Timespan time.Duration
 const DurationFormat = "15:04:05.000"
 
 func (t Timespan) Format(format string) string {
-	_t := time.Date(0, 0, 0, 0, 0, 0, int(time.Duration(t).Nanoseconds()), time.UTC)
-	return _t.Format(format)
+
+	z := time.Unix(0, 0).UTC()
+	return z.Add(time.Duration(t)).Format(format)
 }
 
 func _parseImpulse(ii *Impulse) {
