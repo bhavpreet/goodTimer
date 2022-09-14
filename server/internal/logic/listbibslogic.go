@@ -32,7 +32,8 @@ func (l *ListBibsLogic) ListBibs(req *types.ListBibsReq) (resp *types.ListBibsRe
 
 	var bibs []types.Bib
 	err = l.svcCtx.Find(&bibs,
-		bolthold.Where("ParentRoundID").Eq(req.Round).SortBy("EndTime"))
+		bolthold.Where("ParentRoundID").Eq(req.Round).SortBy("No").Reverse())
+	//      bolthold.Where("ParentRoundID").Eq(req.Round).SortBy("EndTime"))
 	if err != nil {
 		logx.Errorf("Did not found round : %s", req.Round)
 		return
