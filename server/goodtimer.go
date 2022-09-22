@@ -116,12 +116,16 @@ func processImpulse(ii *parser.Impulse) error {
 				bib := new(types.Bib)
 				err := store.Get(current.CurrentStartBib, bib)
 				if err == nil {
-					bib.StartTime = ii.Timestamp.Format(parser.DurationFormat)
+					formattedTime := ii.Timestamp.Format(parser.DurationFormat)
+					if bib.StartTime == "" {
+						bib.StartTime = formattedTime
+					}
+					bib.StartTimes = append(bib.StartTimes, formattedTime)
 					store.Update(current.CurrentStartBib, bib)
 
 					// remove the current start
-					current.CurrentStartBib = ""
-					store.Update("current", current)
+					// current.CurrentStartBib = ""
+					// store.Update("current", current)
 				}
 			}
 		case timy2.END_IMPULSE:
@@ -133,12 +137,16 @@ func processImpulse(ii *parser.Impulse) error {
 				bib := new(types.Bib)
 				err := store.Get(current.CurrentEndBib, bib)
 				if err == nil && bib.StartTime != "DNS" && bib.StartTime != "" {
-					bib.EndTime = ii.Timestamp.Format(parser.DurationFormat)
+					formattedTime := ii.Timestamp.Format(parser.DurationFormat)
+					if bib.EndTime == "" {
+						bib.EndTime = formattedTime
+					}
+					bib.EndTimes = append(bib.EndTimes, formattedTime)
 					store.Update(current.CurrentEndBib, bib)
 
 					// remove the current start
-					current.CurrentEndBib = ""
-					store.Update("current", current)
+					// current.CurrentEndBib = ""
+					// store.Update("current", current)
 				}
 			}
 

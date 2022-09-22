@@ -13,16 +13,19 @@ type Round struct {
 }
 
 type Bib struct {
-	ID             string `json:"id" storm:"id,unique"`
-	No             string `json:"no" storm:"unique"`
-	ParentRoundID  string `json:"-" storm:"index"`
-	Round          Round  `json:"round"`
-	Status         string `json:"status,options=RUNNING|FINISHED"`
-	ISCurrentStart bool   `json:"is_current_start"`
-	ISCurrentEnd   bool   `json:"is_current_end"`
-	StartTime      string `json:"start_time"`
-	EndTime        string `json:"end_time"`
-	Duration       string `json:"duration"`
+	ID             string   `json:"id" storm:"id,unique"`
+	No             string   `json:"no" storm:"unique"`
+	ParentRoundID  string   `json:"-" storm:"index"`
+	Round          Round    `json:"round"`
+	Status         string   `json:"status,options=RUNNING|FINISHED"`
+	ISCurrentStart bool     `json:"is_current_start"`
+	ISCurrentEnd   bool     `json:"is_current_end"`
+	StartTimes     []string `json:"start_times"`
+	StartTime      string   `json:"start_time"`
+	ST             string   `json:"st"`
+	EndTimes       []string `json:"end_times"`
+	EndTime        string   `json:"end_time"`
+	Duration       string   `json:"duration"`
 }
 
 type Current struct {

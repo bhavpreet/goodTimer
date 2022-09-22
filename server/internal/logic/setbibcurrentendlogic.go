@@ -34,15 +34,20 @@ func (l *SetBibCurrentEndLogic) SetBibCurrentEnd(req *types.SetBibCurrentReq) er
 		return err
 	}
 
-	if bib.StartTime != "DNS" && bib.EndTime == "" {
+	if bib.StartTime != "DNS" && bib.StartTime != "" {
 		current, _ := GetCurrent(l.svcCtx.Store)
-		current.CurrentRound = req.Round
-		current.CurrentEndBib = req.Bib
+		// toggle
+		if bib.ID == current.CurrentEndBib {
+			current.CurrentEndBib = ""
+		} else {
+			current.CurrentRound = req.Round
+			current.CurrentEndBib = bib.ID
+		}
+
 		l.svcCtx.Store.Update("current", current)
 	} else {
 		return fmt.Errorf("Bib start time is END can not be set for %+v", bib)
 	}
-
 
 	return nil
 }
